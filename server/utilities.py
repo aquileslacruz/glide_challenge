@@ -133,9 +133,9 @@ def get_expansion_data(data, parameter, allowed):
 # An auxiliar function to make sure that we don't remove data already expanded
 def update_dictionary(dict1, dict2):
     result = dict()
-    for key in dict1.keys():
-        if not isinstance(dict1[key], dict):
-            result[key] = dict2[key]
+    for key in set(dict1.keys()).union(set(dict2.keys())):
+        if not isinstance(dict1.get(key), dict):
+            result[key] = dict2.get(key)
         else:
-            result[key] = dict1[key]
+            result[key] = dict1.get(key)
     return result
