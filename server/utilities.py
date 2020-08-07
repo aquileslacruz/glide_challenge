@@ -29,12 +29,22 @@ def get_list_url_parameters():
     # Get limit parameter or set to default
     try:
         limit = int(request.args.get('limit'))
+        if limit <= 0:
+            abort(400, 'Limit must be greater than 0')
+        elif limit > 1000:
+            abort(400, 'Limit must be less than or equal to 1000')
+    except HTTPException as e:
+        raise
     except:
         limit = 100
 
     # Get offset parameter or set to default
     try:
         offset = int(request.args.get('offset'))
+        if offset < 0:
+            abort(400, 'Offset must be greater than or equal to 0')
+    except HTTPException as e:
+        raise
     except:
         offset = 0
 

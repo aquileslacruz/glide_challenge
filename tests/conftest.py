@@ -17,3 +17,13 @@ def test_client():
 def employee_data():
     with open(TestConfig.EMPLOYEES_JSON) as json_file:
         yield json.load(json_file)
+
+@pytest.fixture(scope='module')
+def office_data():
+    with open(TestConfig.OFFICES_JSON) as json_file:
+        yield json.load(json_file)
+
+@pytest.fixture(scope='module')
+def department_data():
+    with open(TestConfig.DEPARTMENTS_JSON) as json_file:
+        yield json.load(json_file)
