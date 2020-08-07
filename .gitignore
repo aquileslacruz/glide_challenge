@@ -1,0 +1,8 @@
+# Cache
+__pycache__/
+
+# Environment
+env/
+
+# Compiled files
+*.pyc
