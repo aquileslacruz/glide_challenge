@@ -16,3 +16,6 @@ class DevConfig(BaseConfig):
 class TestConfig(BaseConfig):
     DEBUG = True
     TESTING = True
+    OFFICES_JSON = os.path.join(BASEDIR, '../tests/data/test_offices.json')
+    EMPLOYEES_JSON = os.path.join(BASEDIR, '../tests/data/test_employees.json')
+    DEPARTMENTS_JSON = os.path.join(BASEDIR, '../tests/data/test_departments.json')

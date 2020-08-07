@@ -1,0 +1,42 @@
+[
+    {
+        "department": 1,
+        "first": "Patricia",
+        "id": 1,
+        "last": "Diaz",
+        "manager": 2,
+        "office": 1
+    },
+    {
+        "department": 2,
+        "first": "Daniel",
+        "id": 2,
+        "last": "Smith",
+        "manager": 3,
+        "office": 1
+    },
+    {
+        "department": 1,
+        "first": "Thomas",
+        "id": 3,
+        "last": "Parker",
+        "manager": 4,
+        "office": null
+    },
+    {
+        "department": 2,
+        "first": "Ruth",
+        "id": 4,
+        "last": "Morgan",
+        "manager": 5,
+        "office": 2
+    },
+    {
+        "department": 1,
+        "first": "Jerry",
+        "id": 5,
+        "last": "Sanders",
+        "manager": null,
+        "office": 1
+    }
+]

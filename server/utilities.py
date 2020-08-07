@@ -1,6 +1,5 @@
 from werkzeug.exceptions import HTTPException
-from flask import jsonify, json, abort
-from server.config import BaseConfig
+from flask import jsonify, json, abort, current_app
 import requests
 
 EXPAND_OPTIONS = ['manager', 'office', 'department', 'superdepartment']
@@ -18,6 +17,7 @@ def handle_exception(e):
     if isinstance(e, HTTPException):
         return handle_http_exception(e)
 
+    print(e)
     return jsonify({
         'code': 500,
         'name': 'Internal Server Error',
@@ -78,15 +78,15 @@ def get_expansion_data(data, parameter):
 
     # If 'manager' consult the API for the ids
     if parameter == 'manager':
-        response = requests.get(BaseConfig.EMPLOYEE_API, params={'id': ids})
+        response = requests.get(current_app.config.get('EMPLOYEE_API'), params={'id': ids})
         expansion_data = response.json()
     # If 'office' use the complete set of OFFICES
     elif parameter == 'office':
-        with open(BaseConfig.OFFICES_JSON) as json_file:
+        with open(current_app.config.get('OFFICES_JSON')) as json_file:
             expansion_data = json.load(json_file)
     # If 'department' or 'superdepartment' use the complete DEPARTMENTS
     elif parameter in ['department', 'superdepartment']:
-        with open(BaseConfig.DEPARTMENTS_JSON) as json_file:
+        with open(current_app.config.get('DEPARTMENTS_JSON')) as json_file:
             expansion_data = json.load(json_file)
     else:
         expansion_data = []

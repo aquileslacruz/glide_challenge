@@ -1,0 +1,13 @@
+[{
+	"id": 1,
+	"name": "Department 1",
+	"superdepartment": 2
+}, {
+	"id": 2,
+	"name": "Department 2",
+	"superdepartment": 3
+}, {
+	"id": 3,
+	"name": "Department 3",
+	"superdepartment": null
+}]

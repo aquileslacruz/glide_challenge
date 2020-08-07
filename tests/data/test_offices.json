@@ -1,0 +1,11 @@
+[{
+	"id": 1,
+	"city": "San Francisco",
+	"country": "United States",
+	"address": "450 Market St"
+}, {
+	"id": 2,
+	"city": "New York",
+	"country": "United States",
+	"address": "20 W 34th St"
+}]

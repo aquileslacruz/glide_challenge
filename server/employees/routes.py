@@ -1,5 +1,4 @@
-from flask import request, abort, jsonify, json
-from server.config import BaseConfig
+from flask import request, abort, jsonify, json, current_app
 from server.utilities import expand_data
 from . import employees_blueprint
 import requests
@@ -11,7 +10,7 @@ def get_employees():
 
     # Request Data from API
     payload = {'limit': limit, 'offset': offset}
-    response = requests.get(BaseConfig.EMPLOYEE_API, params=payload)
+    response = requests.get(current_app.config.get('EMPLOYEE_API'), params=payload)
     data = response.json()
 
     # Expand the data
@@ -24,11 +23,11 @@ def get_employees():
 @employees_blueprint.route('/<int:id>/', methods=['GET'], strict_slashes=False)
 def get_employee(id):
     # Get URL parameter
-    expand = request.args.getlist('expand', None)
+    expand = request.args.getlist('expand')
 
     # Request Data from API
     payload = {'id': id}
-    response = requests.get(BaseConfig.EMPLOYEE_API, params=payload)
+    response = requests.get(current_app.config.get('EMPLOYEE_API'), params=payload)
     data = response.json()
     if len(data) == 0:
         abort(404, description='No employee found with the provided id')
@@ -47,13 +46,13 @@ def get_employee(id):
 def get_list_url_parameters():
     # Get limit parameter or set to default
     try:
-        limit = int(request.args.get('limit'), 10)
+        limit = int(request.args.get('limit'))
     except:
-        limit = 10
+        limit = 100
 
     # Get offset parameter or set to default
     try:
-        offset = int(request.args.get('offset', 0))
+        offset = int(request.args.get('offset'))
     except:
         offset = 0
 
