@@ -1,5 +1,5 @@
 from flask import request, abort, jsonify, json, current_app
-from server.utilities import expand_data
+from server.utilities import expand_data, get_list_url_parameters
 from . import employees_blueprint
 import requests
 
@@ -38,25 +38,3 @@ def get_employee(id):
 
     # Return response
     return jsonify(data.pop())
-
-#
-# AUXILIAR FUNCTIONS
-#
-
-def get_list_url_parameters():
-    # Get limit parameter or set to default
-    try:
-        limit = int(request.args.get('limit'))
-    except:
-        limit = 100
-
-    # Get offset parameter or set to default
-    try:
-        offset = int(request.args.get('offset'))
-    except:
-        offset = 0
-
-    # Get expand parameter or set to []
-    expand = request.args.getlist('expand')
-
-    return limit, offset, expand

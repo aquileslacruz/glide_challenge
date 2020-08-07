@@ -16,4 +16,9 @@ def register_error_handling(app):
 
 def register_blueprints(app):
     from server.employees import employees_blueprint
+    from server.offices import offices_blueprint
+    from server.departments import departments_blueprint
+    
     app.register_blueprint(employees_blueprint)
+    app.register_blueprint(offices_blueprint)
+    app.register_blueprint(departments_blueprint)
