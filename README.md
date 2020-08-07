@@ -29,4 +29,4 @@ To initialize containers
 ## Testing URL argument handling
 Another part of the project was the handling of URL arguments in the endpoints, this can be tested with:
 
-    curl -X GET 'http://127.0.0.1:5000/employees?limit=10&offset=10&expand=manager.manager&expand=office&expand=department.superdepartment
+    curl -X GET 'http://127.0.0.1:5000/employees?limit=10&offset=10&expand=manager.manager&expand=office&expand=department.superdepartment'
