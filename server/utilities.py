@@ -17,7 +17,6 @@ def handle_exception(e):
     if isinstance(e, HTTPException):
         return handle_http_exception(e)
 
-    print(e)
     return jsonify({
         'code': 500,
         'name': 'Internal Server Error',
@@ -86,8 +85,12 @@ def process_expansion(data, parameters, allowed):
 
     # Expand the elements of the data
     for element in data:
-        id_to_expand = element[current_param]
-        element[current_param] = ordered_data.get(id_to_expand, None)
+        if isinstance(element[current_param], dict):
+            id_to_expand = element[current_param].get('id')
+            element[current_param] = update_dictionary(element[current_param], ordered_data.get(id_to_expand, None))
+        elif isinstance(element[current_param], int):
+            id_to_expand = element[current_param]
+            element[current_param] = ordered_data.get(id_to_expand, None)
     
     return data
 
@@ -100,7 +103,12 @@ def get_expansion_data(data, parameter, allowed):
         abort(400, description='There was a problem with the expand argument')
 
     # Get the ids of the parameter to be expanded
-    ids = set([e[parameter] for e in data if e.get(parameter) is not None])
+    ids = [e[parameter] for e in data if e.get(parameter) is not None]
+    # Check if ids are dict (could have been expanded before)
+    if all([isinstance(i, dict) for i in ids]):
+        ids = [e.get('id') for e in ids]
+    ids = set(ids)
+
     # Do not waste time if there are no ids
     if len(ids) == 0:
         return []
@@ -121,3 +129,13 @@ def get_expansion_data(data, parameter, allowed):
         expansion_data = []
 
     return expansion_data
+
+# An auxiliar function to make sure that we don't remove data already expanded
+def update_dictionary(dict1, dict2):
+    result = dict()
+    for key in dict1.keys():
+        if not isinstance(dict1[key], dict):
+            result[key] = dict2[key]
+        else:
+            result[key] = dict1[key]
+    return result
